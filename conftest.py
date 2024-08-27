@@ -7,9 +7,12 @@ from data import password, login
 from locators.LoginPageLocators import LoginLocators
 from locators.MainPageLocators import MainLocators
 from pages.account_page import AccountPage
+from pages.forgot_password_page import ForgotPasswordPage
+from pages.login_page import LoginPage
 
 from pages.main_page import MainPage
-from url import MAIN_URL, ACCOUNT_URL
+from pages.reset_password_page import ResetPasswordPage
+from url import MAIN_URL, ACCOUNT_URL, LOGIN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL
 
 
 @pytest.fixture()
@@ -30,6 +33,27 @@ def main_page(driver):
 def account_page(driver):
     page = AccountPage(driver)
     page.get_url(ACCOUNT_URL)
+    return page
+
+
+@pytest.fixture()
+def login_page(driver):
+    page = LoginPage(driver)
+    page.get_url(LOGIN_URL)
+    return page
+
+
+@pytest.fixture()
+def forgot_password_page(driver):
+    page = ForgotPasswordPage(driver)
+    page.get_url(FORGOT_PASSWORD_URL)
+    return page
+
+
+@pytest.fixture()
+def reset_password_page(driver):
+    page = ResetPasswordPage(driver)
+    page.get_url(RESET_PASSWORD_URL)
     return page
 
 
