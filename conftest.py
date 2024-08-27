@@ -28,8 +28,8 @@ def main_page(driver):
 
 @pytest.fixture()
 def account_page(driver):
-    driver.get(ACCOUNT_URL)
     page = AccountPage(driver)
+    page.get_url(ACCOUNT_URL)
     return page
 
 

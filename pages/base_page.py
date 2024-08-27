@@ -6,11 +6,17 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    def get_url(self, URL):
-        self.driver.get(URL)
+# Открыть страницу по URL.
+    def get_url(self, url):
+        self.driver.get(url)
 
+    # Получить текущий URL.
     def get_current_url(self):
         return self.driver.current_url
+
+    # Ждать, пока текущий URL не станет равен ожидаемому.
+    def wait_for_url(self, url, timeout=5):
+        WebDriverWait(self.driver, timeout).until(expected_conditions.url_to_be(url))
 
     def find_element_with_wait(self, locator):
         WebDriverWait(
