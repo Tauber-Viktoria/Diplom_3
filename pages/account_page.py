@@ -12,6 +12,7 @@ class AccountPage(BasePage):
         self.wait_for_url(url.ACCOUNT_ORDER_HISTORY_URL)
         return self.get_current_url()
 
+    @allure.step("Клик на кнопку «Выход»")
     def click_exit_button(self):
         self.click_on_element(AccountLocators.EXIT_BUTTON)
         self.wait_for_url(url.LOGIN_URL)
