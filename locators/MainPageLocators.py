@@ -6,3 +6,4 @@ class MainLocators:
     LOGIN_TO_ACCOUNT_BUTTON = (By.XPATH, "//button[text()='Войти в аккаунт']")
     ORDER_BUTTON = (By.XPATH, "//button[text()='Оформить заказ']")
     PERSONAL_ACCOUNT = (By.XPATH, "//p[text()='Личный Кабинет']")
+

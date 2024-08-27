@@ -1,4 +1,3 @@
-# noinspection PyInterpreter
 import pytest
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions
@@ -7,9 +6,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from data import password, login
 from locators.LoginPageLocators import LoginLocators
 from locators.MainPageLocators import MainLocators
+from pages.account_page import AccountPage
 
 from pages.main_page import MainPage
-from url import MAIN_URL
+from url import MAIN_URL, ACCOUNT_URL
 
 
 @pytest.fixture()
@@ -23,6 +23,13 @@ def driver():
 def main_page(driver):
     page = MainPage(driver)
     page.get_url(MAIN_URL)
+    return page
+
+
+@pytest.fixture()
+def account_page(driver):
+    driver.get(ACCOUNT_URL)
+    page = AccountPage(driver)
     return page
 
 
