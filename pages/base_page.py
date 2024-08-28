@@ -1,3 +1,4 @@
+from selenium.common import TimeoutException
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -42,7 +43,10 @@ class BasePage:
         WebDriverWait(self.driver, 10).until(expected_conditions.url_contains(partial_url))
         return self.driver.current_url
 
+    # Проверка наличия элемента на странице
     def is_element_present(self, locator, timeout=5):
-        return WebDriverWait(self.driver, timeout).until(
-            expected_conditions.presence_of_element_located(locator)
-        )
+        try:
+            WebDriverWait(self.driver, timeout).until(expected_conditions.presence_of_element_located(locator))
+            return True
+        except TimeoutException:
+            return False
