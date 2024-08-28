@@ -50,3 +50,11 @@ class BasePage:
             return True
         except TimeoutException:
             return False
+
+    # Проверка отсуствия элемента на странице
+    def is_element_absent(self, locator, timeout=5):
+        try:
+            WebDriverWait(self.driver, timeout).until(expected_conditions.invisibility_of_element_located(locator))
+            return True
+        except TimeoutException:
+            return False

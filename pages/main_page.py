@@ -1,18 +1,17 @@
 import allure
-
 import url
 from locators.MainPageLocators import MainLocators
 from pages.base_page import BasePage
 
 
 class MainPage(BasePage):
-    @allure.step("клик на «Личный кабинет»")
+    @allure.step("клик на кнопку «Личный кабинет»")
     def click_personal_account_button(self):
         self.click_on_element(MainLocators.PERSONAL_ACCOUNT)
         self.wait_for_url(url.ACCOUNT_URL)
         return self.get_current_url()
 
-    @allure.step("клик на «Конструктор»")
+    @allure.step("клик на кнопку «Конструктор»")
     def click_constructor_button(self):
         self.click_on_element(MainLocators.CONSTRUCTOR_BUTTON)
 
@@ -20,7 +19,7 @@ class MainPage(BasePage):
     def wait_for_title_burger(self):
         return self.is_element_present(MainLocators.ASSEMBLE_BURGER_TITLE)
 
-    @allure.step("клик на «Личный кабинет»")
+    @allure.step("клик на кнопку «Лента заказов»")
     def click_order_feed_button(self):
         self.click_on_element(MainLocators.ORDER_FEED_BUTTON)
         self.wait_for_url(url.FEED_URL)
@@ -29,3 +28,19 @@ class MainPage(BasePage):
     @allure.step("дождаться заголовка «Лента заказов»")
     def wait_for_title_order_feed(self):
         return self.is_element_present(MainLocators.ORDER_FEED_TITLE)
+
+    @allure.step("клик на ингредиент")
+    def click_ingredient(self):
+        self.click_on_element(MainLocators.BURGER_INGREDIENT)
+
+    @allure.step("дождаться всплывающее окно")
+    def wait_for_popup_ingredient_details_window(self):
+        return self.is_element_present(MainLocators.POPUP_INGREDIENT_DETAILS_WINDOW)
+
+    @allure.step("клик на крестик во всплывающем окне")
+    def click_cross_in_popup_window(self):
+        self.click_on_element(MainLocators.CLOSE_BUTTON)
+
+    @allure.step("Проверка, что всплывающее окно закрыто")
+    def is_popup_window_closed(self):
+        return self.is_element_absent(MainLocators.POPUP_INGREDIENT_DETAILS_WINDOW)
