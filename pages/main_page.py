@@ -79,3 +79,10 @@ class MainPage(BasePage):
         order_id = element.text
         return order_id
 
+    def create_order(self):
+        self.drag_and_drop_ingredient_bun()
+        self.drag_and_drop_ingredient_souses()
+        self.click_place_order_button()  # нажать на оформление заказа
+        self.get_order_id_from_popup()
+        self.click_cross_in_popup_window()  # нажать на крестик
+

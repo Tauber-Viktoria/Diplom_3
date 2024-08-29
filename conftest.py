@@ -67,7 +67,7 @@ def feed_page(driver):
 
 # Создание заказа и получение ID заказа
 @pytest.fixture()
-def create_order(main_page, login_in):
+def order_id(main_page, login_in):
     main_page.drag_and_drop_ingredient_bun()
     main_page.drag_and_drop_ingredient_souses()
     main_page.click_place_order_button()

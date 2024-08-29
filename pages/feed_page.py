@@ -1,12 +1,15 @@
 import allure
 from selenium.webdriver.common.by import By
 
-
 from locators.FeedPageLocators import FeedLocators
 from pages.base_page import BasePage
 
 
 class FeedPage(BasePage):
+    @allure.step("клик на кнопку «Конструктор»")
+    def click_constructor_button(self):
+        self.click_on_element(FeedLocators.CONSTRUCTOR_BUTTON)
+
     @allure.step("Поиск заказа в ленте заказов по ID {order_id} и клик по нему")
     def find_and_click_order_by_id(self, order_id):
         locator = (By.XPATH, FeedLocators.ORDER_FEED_ITEM_BY_ID[1].format(order_id=order_id))
@@ -37,6 +40,12 @@ class FeedPage(BasePage):
         order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_ALL_TIME)
         return int(order_counter_text)
 
-    @allure.step("клик на кнопку «Конструктор»")
-    def click_constructor_button(self):
-        self.click_on_element(FeedLocators.CONSTRUCTOR_BUTTON)
+    @allure.step("зафиксировать колличество заказов в разделе 'Выполнено за сегодня'")
+    def get_number_orders_today(self):
+        self.wait_for_text_to_change(
+            FeedLocators.ORDER_COUNTER_TODAY,
+            initial_text=None,
+            timeout=10
+        )
+        order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_ALL_TIME)
+        return int(order_counter_text)
