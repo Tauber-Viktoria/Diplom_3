@@ -1,4 +1,5 @@
 from selenium.common import TimeoutException
+from selenium.webdriver import ActionChains
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -58,3 +59,8 @@ class BasePage:
             return True
         except TimeoutException:
             return False
+
+    def drag_and_drop_on_to_element(self, element_from, element_to):
+        element_from = self.find_element_with_wait(element_from)
+        element_to = self.find_element_with_wait(element_to)
+        ActionChains(self.driver).drag_and_drop(element_from, element_to).perform()

@@ -31,7 +31,7 @@ class MainPage(BasePage):
 
     @allure.step("клик на ингредиент")
     def click_ingredient(self):
-        self.click_on_element(MainLocators.BURGER_INGREDIENT)
+        self.click_on_element(MainLocators.BURGER_INGREDIENT_BUN)
 
     @allure.step("дождаться всплывающее окно")
     def wait_for_popup_ingredient_details_window(self):
@@ -44,3 +44,25 @@ class MainPage(BasePage):
     @allure.step("Проверка, что всплывающее окно закрыто")
     def is_popup_window_closed(self):
         return self.is_element_absent(MainLocators.POPUP_INGREDIENT_DETAILS_WINDOW)
+
+    @allure.step("Добавление ингредиента Булки в заказ")
+    def drag_and_drop_ingredient_bun(self):
+        return self.drag_and_drop_on_to_element(MainLocators.BURGER_INGREDIENT_BUN,
+                                                MainLocators.BURGER_CONSTRUCTOR_BASKET)
+
+    @allure.step("Проверка каунтера ингридиента")
+    def check_counter_num(self):
+        return self.get_text_from_element(MainLocators.COUNTER_BUN)
+
+    @allure.step("Добавление ингредиента Соусы в заказ")
+    def drag_and_drop_ingredient_souses(self):
+        return self.drag_and_drop_on_to_element(MainLocators.BURGER_INGREDIENT_SOUSES,
+                                                MainLocators.BURGER_CONSTRUCTOR_BASKET)
+
+    @allure.step("клик на кнопку «Оформить заказ»")
+    def click_constructor_button(self):
+        self.click_on_element(MainLocators.ORDER_BUTTON)
+
+    @allure.step("дождаться всплывающее окно c заказом")
+    def wait_for_popup_order_id_window(self):
+        return self.is_element_present(MainLocators.POPUP_ORDER_ID_WINDOW)

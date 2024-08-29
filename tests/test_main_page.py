@@ -42,3 +42,19 @@ class TestMainPage:
         main_page.wait_for_popup_ingredient_details_window()
         main_page.click_cross_in_popup_window()
         assert main_page.is_popup_window_closed(), "Всплывающее окно не закрылось после клика по крестику."
+
+    @allure.feature('Функционал сборки заказа')
+    @allure.story('При добавлении ингредиента в заказ, увеличивается каунтер данного ингредиента')
+    @allure.title('Тест на проверку увеличения каунтера у ингредиента который добавили в заказ')
+    def test_add_ingredient_to_order(self, main_page, login_in):
+        main_page.drag_and_drop_ingredient_bun()
+        assert main_page.check_counter_num() == '2', "Всплывающее окно не закрылось после клика по крестику."
+
+    @allure.feature('Функционал сборки заказа')
+    @allure.story('Залогиненный пользователь может оформить заказ')
+    @allure.title('Тест на проверку оформления заказа залогиненным пользователем')
+    def test_place_order_as_logged_user(self, main_page, login_in):
+        main_page.drag_and_drop_ingredient_bun()
+        main_page.drag_and_drop_ingredient_souses()
+        main_page.click_constructor_button()
+        assert main_page.wait_for_popup_order_id_window(), "Не открылось всплывающее окно с индификатором заказа"
