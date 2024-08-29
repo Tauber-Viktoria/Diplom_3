@@ -47,5 +47,5 @@ class FeedPage(BasePage):
             initial_text=None,
             timeout=10
         )
-        order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_ALL_TIME)
+        order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_TODAY)
         return int(order_counter_text)
