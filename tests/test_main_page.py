@@ -1,5 +1,3 @@
-import time
-
 import allure
 import url
 
@@ -57,4 +55,7 @@ class TestMainPage:
         main_page.drag_and_drop_ingredient_bun()
         main_page.drag_and_drop_ingredient_souses()
         main_page.click_constructor_button()
-        assert main_page.wait_for_popup_order_id_window(), "Не открылось всплывающее окно с индификатором заказа"
+        order_id = main_page.get_order_id_from_popup()
+        assert main_page.wait_for_popup_order_id_window() and order_id is not None and order_id != 9999, \
+            ("Не открылось всплывающее окно с индификатором заказа, "
+             "ID заказа остался 9999 или не обновился на актуальный. ")

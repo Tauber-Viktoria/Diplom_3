@@ -8,7 +8,7 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-# Открыть страницу по URL.
+    # Открыть страницу по URL.
     def get_url(self, url):
         self.driver.get(url)
 
@@ -64,3 +64,9 @@ class BasePage:
         element_from = self.find_element_with_wait(element_from)
         element_to = self.find_element_with_wait(element_to)
         ActionChains(self.driver).drag_and_drop(element_from, element_to).perform()
+
+    # Ожидает, пока текст элемента не изменится с initial_text на любой другой
+    def wait_for_text_to_change(self, locator, initial_text, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            lambda driver: self.find_element_with_wait(locator).text != initial_text
+        )

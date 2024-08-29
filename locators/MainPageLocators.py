@@ -17,4 +17,6 @@ class MainLocators:
     BURGER_CONSTRUCTOR_BASKET = (By.XPATH, "//ul[contains(@class, 'BurgerConstructor_basket__list')]")
     COUNTER_BUN = (By.CSS_SELECTOR, "[class='counter_counter__num__3nue1']")
     POPUP_ORDER_ID_WINDOW = (By.CLASS_NAME, "Modal_modal__container__Wo2l_")
+    ORDER_ID_TITLE = (By.CSS_SELECTOR, "h2.Modal_modal__title_shadow__3ikwq.text_type_digits-large")
+
 

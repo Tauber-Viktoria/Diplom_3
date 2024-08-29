@@ -66,3 +66,15 @@ class MainPage(BasePage):
     @allure.step("дождаться всплывающее окно c заказом")
     def wait_for_popup_order_id_window(self):
         return self.is_element_present(MainLocators.POPUP_ORDER_ID_WINDOW)
+
+    # Метод для получения ID заказа из всплывающего окна
+    @allure.step("Получение ID заказа из всплывающего окна")
+    def get_order_id_from_popup(self):
+        self.wait_for_text_to_change(
+            MainLocators.ORDER_ID_TITLE,
+            initial_text="9999",
+            timeout=10
+        )
+        element = self.find_element_with_wait(MainLocators.ORDER_ID_TITLE)
+        order_id = element.text
+        return order_id
