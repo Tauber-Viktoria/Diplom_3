@@ -33,15 +33,15 @@ class MainPage(BasePage):
     def click_ingredient(self):
         self.click_on_element(MainLocators.BURGER_INGREDIENT_BUN)
 
-    @allure.step("дождаться всплывающее окно")
+    @allure.step("дождаться всплывающее окно ингредиента")
     def wait_for_popup_ingredient_details_window(self):
         return self.is_element_present(MainLocators.POPUP_INGREDIENT_DETAILS_WINDOW)
 
-    @allure.step("клик на крестик во всплывающем окне")
+    @allure.step("клик на крестик во всплывающем окне ингредиентв")
     def click_cross_in_popup_window(self):
         self.click_on_element(MainLocators.CLOSE_BUTTON)
 
-    @allure.step("Проверка, что всплывающее окно закрыто")
+    @allure.step("Проверка, что всплывающее окно ингредиента закрыто")
     def is_popup_window_closed(self):
         return self.is_element_absent(MainLocators.POPUP_INGREDIENT_DETAILS_WINDOW)
 
@@ -78,3 +78,4 @@ class MainPage(BasePage):
         element = self.find_element_with_wait(MainLocators.ORDER_ID_TITLE)
         order_id = element.text
         return order_id
+

@@ -7,12 +7,13 @@ from data import password, login
 from locators.LoginPageLocators import LoginLocators
 from locators.MainPageLocators import MainLocators
 from pages.account_page import AccountPage
+from pages.feed_page import FeedPage
 from pages.forgot_password_page import ForgotPasswordPage
 from pages.login_page import LoginPage
 
 from pages.main_page import MainPage
 from pages.reset_password_page import ResetPasswordPage
-from url import MAIN_URL, ACCOUNT_URL, LOGIN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL
+from url import MAIN_URL, ACCOUNT_URL, LOGIN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, FEED_URL
 
 
 @pytest.fixture()
@@ -55,6 +56,24 @@ def reset_password_page(driver):
     page = ResetPasswordPage(driver)
     page.get_url(RESET_PASSWORD_URL)
     return page
+
+
+@pytest.fixture()
+def feed_page(driver):
+    page = FeedPage(driver)
+    page.get_url(FEED_URL)
+    return page
+
+
+# Создание заказа и получение ID заказа
+@pytest.fixture()
+def create_order(main_page, login_in):
+    main_page.drag_and_drop_ingredient_bun()
+    main_page.drag_and_drop_ingredient_souses()
+    main_page.click_constructor_button()
+    order_id = main_page.get_order_id_from_popup()
+    main_page.click_cross_in_popup_window()
+    return order_id
 
 
 @pytest.fixture
