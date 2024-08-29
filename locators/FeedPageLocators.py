@@ -15,3 +15,9 @@ class FeedLocators:
 
     # Локатор для ID заказа, содержащегося в списке заказов "В работе"
     ORDER_READY_ID = (By.CSS_SELECTOR, ".OrderFeed_orderListReady__1YFem .text_type_digits-default")
+
+    # Локатор для счётчика заказов за все время
+    ORDER_COUNTER_ALL_TIME = (By.CSS_SELECTOR, ".OrderFeed_number__2MbrQ.text.text_type_digits-large")
+
+    CONSTRUCTOR_BUTTON = (By.XPATH, "//p[text()='Конструктор']")
+

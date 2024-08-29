@@ -60,7 +60,7 @@ class MainPage(BasePage):
                                                 MainLocators.BURGER_CONSTRUCTOR_BASKET)
 
     @allure.step("клик на кнопку «Оформить заказ»")
-    def click_constructor_button(self):
+    def click_place_order_button(self):
         self.click_on_element(MainLocators.ORDER_BUTTON)
 
     @allure.step("дождаться всплывающее окно c заказом")

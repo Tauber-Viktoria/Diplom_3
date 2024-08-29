@@ -54,7 +54,7 @@ class TestMainPage:
     def test_place_order_as_logged_user(self, main_page, login_in):
         main_page.drag_and_drop_ingredient_bun()
         main_page.drag_and_drop_ingredient_souses()
-        main_page.click_constructor_button()
+        main_page.click_place_order_button()
         order_id = main_page.get_order_id_from_popup()
         assert main_page.wait_for_popup_order_id_window() and order_id is not None and order_id != 9999, \
             ("Не открылось всплывающее окно с индификатором заказа, "

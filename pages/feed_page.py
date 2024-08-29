@@ -26,3 +26,13 @@ class FeedPage(BasePage):
         element = self.find_element_with_wait(FeedLocators.ORDER_READY_ID)
         order_id = element.text.strip()
         return order_id
+
+    @allure.step("зафиксировать колличество заказов в разделе 'Выполнено за все время'")
+    def get_number_orders_all_time(self):
+        order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_ALL_TIME)
+        return int(order_counter_text)
+
+    @allure.step("клик на кнопку «Конструктор»")
+    def click_constructor_button(self):
+        self.click_on_element(FeedLocators.CONSTRUCTOR_BUTTON)
+

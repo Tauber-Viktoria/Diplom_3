@@ -70,7 +70,7 @@ def feed_page(driver):
 def create_order(main_page, login_in):
     main_page.drag_and_drop_ingredient_bun()
     main_page.drag_and_drop_ingredient_souses()
-    main_page.click_constructor_button()
+    main_page.click_place_order_button()
     order_id = main_page.get_order_id_from_popup()
     main_page.click_cross_in_popup_window()
     return order_id
