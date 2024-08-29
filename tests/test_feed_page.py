@@ -5,7 +5,7 @@ import pytest
 class TestFeedPage:
     @allure.feature('Раздел «Лента заказов»')
     @allure.story('Если кликнуть на заказ, откроется всплывающее окно с деталями')
-    @allure.title('Тест открытия модального окна по клику на оформленный заказ')
+    @allure.title('Тест на отображение собранного заказа в ленте заказов и открытия модального окна по клику на заказ')
     def test_open_popup_window_with_order_details(self, main_page, feed_page, order_id):
         main_page.click_order_feed_button()
         feed_page.find_and_click_order_by_id(order_id)
