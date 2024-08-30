@@ -2,7 +2,6 @@ import allure
 import url
 
 from locators.ForgotPasswordLocators import ForgotPasswordLocators
-
 from pages.base_page import BasePage
 
 

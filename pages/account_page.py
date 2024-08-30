@@ -1,6 +1,6 @@
 import allure
-
 import url
+
 from locators.AccountPageLocators import AccountLocators
 from pages.base_page import BasePage
 
@@ -17,4 +17,3 @@ class AccountPage(BasePage):
         self.click_on_element(AccountLocators.EXIT_BUTTON)
         self.wait_for_url(url.LOGIN_URL)
         return self.get_current_url()
-

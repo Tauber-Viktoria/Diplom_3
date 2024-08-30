@@ -1,5 +1,6 @@
 import allure
 import url
+
 from locators.MainPageLocators import MainLocators
 from pages.base_page import BasePage
 
@@ -85,4 +86,3 @@ class MainPage(BasePage):
         self.click_place_order_button()  # нажать на оформление заказа
         self.get_order_id_from_popup()
         self.click_cross_in_popup_window()  # нажать на крестик
-
