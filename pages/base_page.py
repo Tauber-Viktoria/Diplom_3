@@ -27,9 +27,13 @@ class BasePage:
             expected_conditions.visibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
+    # Ждать, пока элемент станет кликабельным на странице
+    def wait_element_to_be_clickable(self, locator, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(expected_conditions.element_to_be_clickable(locator))
+
     # Клик по элементу.
     def click_on_element(self, locator):
-        element = self.find_element_with_wait(locator)
+        element = self.wait_element_to_be_clickable(locator)
         element.click()
 
     # Скролл до заданного элемента.
