@@ -1,18 +1,13 @@
 import pytest
 from selenium import webdriver
-from selenium.webdriver.support import expected_conditions
-from selenium.webdriver.support.wait import WebDriverWait
 
-from data import password, login
-from locators.LoginPageLocators import LoginLocators
-from locators.MainPageLocators import MainLocators
 from pages.account_page import AccountPage
 from pages.feed_page import FeedPage
 from pages.forgot_password_page import ForgotPasswordPage
 from pages.login_page import LoginPage
-
 from pages.main_page import MainPage
 from pages.reset_password_page import ResetPasswordPage
+
 from url import MAIN_URL, ACCOUNT_URL, LOGIN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, FEED_URL
 
 
@@ -77,11 +72,7 @@ def order_id(main_page, login_in):
 
 
 @pytest.fixture
-def login_in(driver):
-    driver.get("https://stellarburgers.nomoreparties.site")
-    driver.find_element(*MainLocators.LOGIN_TO_ACCOUNT_BUTTON).click()
-    driver.find_element(*LoginLocators.LOGIN_FIELD).send_keys(login)
-    driver.find_element(*LoginLocators.PASSWORD_FIELD).send_keys(password)
-    driver.find_element(*LoginLocators.LOGIN_BUTTON).click()
-    WebDriverWait(driver, 5).until(
-        expected_conditions.visibility_of_element_located(MainLocators.ORDER_BUTTON))
+def login_in(login_page):
+    login_page.set_email()
+    login_page.set_password()
+    login_page.click_login_button()
