@@ -1,6 +1,7 @@
 import allure
 from selenium.webdriver.common.by import By
 
+import url
 from locators.FeedPageLocators import FeedLocators
 from pages.base_page import BasePage
 
@@ -49,3 +50,18 @@ class FeedPage(BasePage):
         )
         order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_TODAY)
         return int(order_counter_text)
+
+    @allure.step("Поиск заказа по ID {order_id}")
+    def find_order_by_id(self, order_id):
+        locator = (By.XPATH, f"//p[contains(@class, 'text_type_digits-default') and text()='#0{order_id}']")
+        element = self.find_element_with_wait(locator)
+        assert element, f"Заказ с ID {order_id} не найден."
+
+    @allure.step("Cкролл до созданного заказа в истории заказов")
+    def scroll_order_in_history(self):
+        self.scroll_into_view(FeedLocators.LAST_ORDER_IN_HISTORY)
+
+    def click_personal_account_button(self):
+        self.click_on_element(FeedLocators.PERSONAL_ACCOUNT)
+        self.wait_for_url(url.ACCOUNT_URL)
+        return self.get_current_url()

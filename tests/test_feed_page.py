@@ -1,3 +1,5 @@
+import time
+
 import allure
 import pytest
 
@@ -13,7 +15,7 @@ class TestFeedPage:
 
     @allure.feature('Раздел «Лента заказов»')
     @allure.story('После оформления заказа его номер появляется в разделе В работе')
-    @allure.title('id созданного заказа отображается в разделе "В работе"')
+    @allure.title('Тест на отображение id созданного заказа в разделе "В работе"')
     def test_display_id_order(self, main_page, feed_page, order_id):
         main_page.click_order_feed_button()
         assert feed_page.get_order_id_from_list_ready() == f'0{order_id}', \
@@ -44,11 +46,25 @@ class TestFeedPage:
         allure.dynamic.story(story)
         allure.dynamic.title(title)
 
-        main_page.click_order_feed_button() # Переход в ленту заказов
-        initial_count = get_initial_count(feed_page) # Зафиксировать текущее значение счётчика заказов
-        main_page.click_constructor_button() # Переход в конструктор
-        main_page.create_order() # Создать заказ
-        main_page.click_order_feed_button() # Переход в ленту заказов
-        new_count = get_new_count(feed_page) # Зафиксировать новое значение счётчика
+        main_page.click_order_feed_button()  # Переход в ленту заказов
+        initial_count = get_initial_count(feed_page)  # Зафиксировать текущее значение счётчика заказов
+        main_page.click_constructor_button()  # Переход в конструктор
+        main_page.create_order()  # Создать заказ
+        main_page.click_order_feed_button()  # Переход в ленту заказов
+        new_count = get_new_count(feed_page)  # Зафиксировать новое значение счётчика
         assert new_count == initial_count + 1, \
             f"Ожидалось, что счётчик увеличится на 1, но он изменился с {initial_count} на {new_count}."
+
+    @allure.feature('Раздел «Лента заказов»')
+    @allure.story('Заказы пользователя из раздела «История заказов» отображаются на странице «Лента заказов»')
+    @allure.title('Тест на отображение заказа из раздела "История заказов" на странице «Лента заказов»')
+    def test_display_id_order_from_order_history(self, main_page, feed_page, account_page, order_id):
+        main_page.click_order_feed_button()
+        order_id_in_feed = feed_page.find_order_by_id(order_id)
+        feed_page.click_personal_account_button()
+        account_page.click_order_history_link()
+        feed_page.scroll_order_in_history()
+        order_id_in_history = feed_page.find_order_by_id(order_id)
+        assert order_id_in_feed == order_id_in_history
+
+
