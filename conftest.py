@@ -1,6 +1,9 @@
 import pytest
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
 
 from pages.account_page import AccountPage
 from pages.feed_page import FeedPage
@@ -13,9 +16,16 @@ from register_user import register_new_user, delete_new_user
 from url import MAIN_URL, ACCOUNT_URL, LOGIN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, FEED_URL
 
 
-@pytest.fixture()
-def driver():
-    driver = webdriver.Chrome()
+@pytest.fixture(params=['firefox', 'chrome'])
+def driver(request):
+    if request.param == 'firefox':
+        options = FirefoxOptions()
+        driver = webdriver.Firefox(options=options)
+    elif request.param == 'chrome':
+        options = ChromeOptions()
+        driver = webdriver.Chrome(options=options)
+
+    driver.set_window_size(1920, 1080)
     yield driver
     driver.quit()
 
