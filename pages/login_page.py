@@ -1,6 +1,5 @@
 import allure
 import url
-from data import login, password
 
 from locators.LoginPageLocators import LoginLocators
 from pages.base_page import BasePage
@@ -14,11 +13,11 @@ class LoginPage(BasePage):
         return self.get_current_url()
 
     @allure.step("заполнить поле «Email")
-    def set_email(self):
+    def set_email(self, login):
         self.find_element_with_wait(LoginLocators.LOGIN_FIELD).send_keys(login)
 
     @allure.step("заполнить поле «Пароль")
-    def set_password(self):
+    def set_password(self, password):
         self.find_element_with_wait(LoginLocators.PASSWORD_FIELD).send_keys(password)
 
     @allure.step("клик на «Войти")

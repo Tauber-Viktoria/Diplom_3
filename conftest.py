@@ -1,4 +1,5 @@
 import pytest
+
 from selenium import webdriver
 
 from pages.account_page import AccountPage
@@ -7,6 +8,7 @@ from pages.forgot_password_page import ForgotPasswordPage
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
 from pages.reset_password_page import ResetPasswordPage
+from register_user import register_new_user, delete_new_user
 
 from url import MAIN_URL, ACCOUNT_URL, LOGIN_URL, FORGOT_PASSWORD_URL, RESET_PASSWORD_URL, FEED_URL
 
@@ -72,7 +74,19 @@ def order_id(main_page, login_in):
 
 
 @pytest.fixture
-def login_in(login_page):
-    login_page.set_email()
-    login_page.set_password()
+def login():
+    user_data, response = register_new_user() # Регистрация нового пользователя
+    yield user_data
+    access_token = user_data.get('access_token')
+    delete_new_user(access_token)  # Вызов функции удаления пользователя
+
+
+@pytest.fixture
+def login_in(login, login_page):
+
+    email = login['email']
+    password = login['password']
+
+    login_page.set_email(email)
+    login_page.set_password(password)
     login_page.click_login_button()
