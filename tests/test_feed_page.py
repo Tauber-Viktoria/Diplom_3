@@ -6,20 +6,20 @@ import pytest
 
 class TestFeedPage:
     @allure.feature('Раздел «Лента заказов»')
-    @allure.story('Если кликнуть на заказ, откроется всплывающее окно с деталями')
-    @allure.title('Тест на отображение собранного заказа в ленте заказов и открытия модального окна по клику на заказ')
-    def test_open_popup_window_with_order_details(self, main_page, feed_page, order_id):
-        main_page.click_order_feed_button()
-        feed_page.find_and_click_order_by_id(order_id)
-        assert feed_page.wait_for_popup_order_details_window(), "Не открылось всплывающее окно с деталями заказа"
-
-    @allure.feature('Раздел «Лента заказов»')
     @allure.story('После оформления заказа его номер появляется в разделе В работе')
     @allure.title('Тест на отображение id созданного заказа в разделе "В работе"')
     def test_display_id_order(self, main_page, feed_page, order_id):
         main_page.click_order_feed_button()
         assert feed_page.get_order_id_from_list_ready() == f'0{order_id}', \
             f"Ожидался ID заказа '0{order_id}', но получен {feed_page.get_order_id_from_list_ready()}"
+
+    @allure.feature('Раздел «Лента заказов»')
+    @allure.story('Если кликнуть на заказ, откроется всплывающее окно с деталями')
+    @allure.title('Тест на отображение собранного заказа в ленте заказов и открытия модального окна по клику на заказ')
+    def test_open_popup_window_with_order_details(self, main_page, feed_page, order_id):
+        main_page.click_order_feed_button()
+        feed_page.find_and_click_order_by_id(order_id)
+        assert feed_page.wait_for_popup_order_details_window(), "Не открылось всплывающее окно с деталями заказа"
 
     @pytest.mark.parametrize(
         "counter_name, get_initial_count, get_new_count, story, title",
@@ -66,5 +66,3 @@ class TestFeedPage:
         feed_page.scroll_order_in_history()
         order_id_in_history = feed_page.find_order_by_id(order_id)
         assert order_id_in_feed == order_id_in_history
-
-
