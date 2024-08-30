@@ -27,19 +27,15 @@ class BasePage:
             expected_conditions.visibility_of_element_located(locator))
         return self.driver.find_element(*locator)
 
-    # Ждать, пока элемент станет кликабельным на странице
-    def wait_element_to_be_clickable(self, locator, timeout=10):
-        return WebDriverWait(self.driver, timeout).until(expected_conditions.element_to_be_clickable(locator))
-
     # Клик по элементу.
     def click_on_element(self, locator):
-        element = self.wait_element_to_be_clickable(locator)
-        element.click()
+        element = self.find_element_with_wait(locator)
+        ActionChains(self.driver).move_to_element(element).click().perform()
 
     # Скролл до заданного элемента.
     def scroll_into_view(self, locator):
         element = self.find_element_with_wait(locator)
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        ActionChains(self.driver).move_to_element(element).perform()
 
     # Получить текст из элемента.
     def get_text_from_element(self, locator):
@@ -63,10 +59,21 @@ class BasePage:
             return False
 
     # Взять и перетащить элемент.
-    def drag_and_drop_on_to_element(self, element_from, element_to):
-        element_from = self.find_element_with_wait(element_from)
-        element_to = self.find_element_with_wait(element_to)
-        ActionChains(self.driver).drag_and_drop(element_from, element_to).perform()
+    def drag_and_drop_on_to_element(self, source_locator, target_locator):
+        from_element = self.find_element_with_wait(source_locator)
+        to_element = self.find_element_with_wait(target_locator)
+
+        # JavaScript для перетаскивания элементов
+        # PS НИЧЕГО НЕ СРАБАТЫВАЛО для Firefox кроме JavaScript
+        self.driver.execute_script("""
+            const [from_element, to_element] = arguments;
+            const dataTransfer = new DataTransfer();
+
+            ['dragstart', 'dragover', 'drop', 'dragend'].forEach(eventType => {
+                const event = new DragEvent(eventType, { bubbles: true, cancelable: true, dataTransfer });
+                (eventType === 'dragstart' ? from_element : to_element).dispatchEvent(event);
+            });
+        """, from_element, to_element)
 
     # Ожидает, пока текст элемента не изменится с initial_text на любой другой.
     def wait_for_text_to_change(self, locator, initial_text, timeout=10):
