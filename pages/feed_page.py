@@ -34,29 +34,23 @@ class FeedPage(BasePage):
         order_id = element.text.strip()
         return order_id
 
-    @allure.step("Ожидание увеличения счётчика заказов 'Выполнено за все время' на 1")
-    def wait_for_order_counter_all_time_to_increase(self, expected_count):
-        self.wait_for_text_to_be(
-            locator=FeedLocators.ORDER_COUNTER_ALL_TIME,
-            expected_text=str(expected_count),
-            timeout=15
-        )
-
-    @allure.step("Ожидание увеличения счётчика заказов 'Выполнено за сегодня' на 1")
-    def wait_for_order_counter_today_to_increase(self, expected_count):
-        self.wait_for_text_to_be(
-            locator=FeedLocators.ORDER_COUNTER_TODAY,
-            expected_text=str(expected_count),
-            timeout=15
-        )
-
     @allure.step("зафиксировать колличество заказов в разделе 'Выполнено за все время'")
     def get_number_orders_all_time(self):
+        self.wait_for_text_to_change(
+            FeedLocators.ORDER_COUNTER_ALL_TIME,
+            initial_text=None,
+            timeout=10
+        )
         order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_ALL_TIME)
         return int(order_counter_text)
 
     @allure.step("зафиксировать колличество заказов в разделе 'Выполнено за сегодня'")
     def get_number_orders_today(self):
+        self.wait_for_text_to_change(
+            FeedLocators.ORDER_COUNTER_TODAY,
+            initial_text=None,
+            timeout=10
+        )
         order_counter_text = self.get_text_from_element(FeedLocators.ORDER_COUNTER_TODAY)
         return int(order_counter_text)
 
