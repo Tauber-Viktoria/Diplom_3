@@ -8,6 +8,7 @@ class TestFeedPage:
     @allure.title('Тест на отображение id созданного заказа в разделе "В работе"')
     def test_display_id_order(self, main_page, feed_page, order_id):
         main_page.click_order_feed_button()
+        feed_page.wait_for_order_id_in_ready_list(order_id)
         assert feed_page.get_order_id_from_list_ready() == f'0{order_id}', \
             f"Ожидался ID заказа '0{order_id}', но получен {feed_page.get_order_id_from_list_ready()}"
 
@@ -20,12 +21,14 @@ class TestFeedPage:
         assert feed_page.wait_for_popup_order_details_window(), "Не открылось всплывающее окно с деталями заказа"
 
     @pytest.mark.parametrize(
-        "counter_name, get_initial_count, get_new_count, story, title",
+        "counter_name, get_initial_count, get_new_count, wait_for_increase, story, title",
         [
             (
                     "за все время",
                     lambda feed_page: feed_page.get_number_orders_all_time(),
                     lambda feed_page: feed_page.get_number_orders_all_time(),
+                    lambda feed_page, expected_count: feed_page.wait_for_order_counter_all_time_to_increase(
+                        expected_count),
                     "При создании нового заказа счётчик Выполнено за всё время увеличивается",
                     'Тест на увеличение счётчика заказов "за все время" после добавления заказа',
             ),
@@ -33,6 +36,8 @@ class TestFeedPage:
                     "за сегодня",
                     lambda feed_page: feed_page.get_number_orders_today(),
                     lambda feed_page: feed_page.get_number_orders_today(),
+                    lambda feed_page, expected_count: feed_page.wait_for_order_counter_today_to_increase(
+                        expected_count),
                     "При создании нового заказа счётчик Выполнено за сегодня увеличивается",
                     'Тест на увеличение счётчика заказов "за сегодня" после добавления заказа',
             ),
@@ -40,7 +45,7 @@ class TestFeedPage:
     )
     @allure.feature('Раздел «Лента заказов»')
     def test_order_counter_increases(self, main_page, feed_page, login_in,
-                                     counter_name, get_initial_count, get_new_count, story, title):
+                                     counter_name, get_initial_count, get_new_count, wait_for_increase, story, title):
         allure.dynamic.story(story)
         allure.dynamic.title(title)
 
@@ -50,7 +55,10 @@ class TestFeedPage:
         main_page.create_order()  # Создать заказ
         main_page.click_order_feed_button()  # Переход в ленту заказов
         new_count = get_new_count(feed_page)  # Зафиксировать новое значение счётчика
-        assert new_count == initial_count + 1, \
+        expected_count = initial_count + 1
+        wait_for_increase(feed_page, expected_count)  # Ожидание увеличения счётчика на 1
+
+        assert new_count == expected_count, \
             f"Ожидалось, что счётчик увеличится на 1, но он изменился с {initial_count} на {new_count}."
 
     @allure.feature('Раздел «Лента заказов»')

@@ -78,5 +78,9 @@ class BasePage:
     # Ожидает, пока текст элемента не изменится с initial_text на любой другой.
     def wait_for_text_to_change(self, locator, initial_text, timeout=10):
         WebDriverWait(self.driver, timeout).until(
-            lambda driver: self.find_element_with_wait(locator).text != initial_text
-        )
+            lambda driver: self.find_element_with_wait(locator).text != initial_text)
+
+    # Ожидание, пока текст элемента не станет равен ожидаемому значению
+    def wait_for_text_to_be(self, locator, expected_text, timeout=10):
+        WebDriverWait(self.driver, timeout).until(
+            lambda driver: self.find_element_with_wait(locator).text == expected_text)
